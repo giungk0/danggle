@@ -14,7 +14,7 @@
     <typeAlias type="kr.co.todaydaeng.admin.model.vo.AdminVO" alias="adminVO" />
 		<typeAlias type="kr.co.todaydaeng.member.model.vo.EmailAuthHist" alias="emailAuthHist"/>
 		<typeAlias type="kr.co.todaydaeng.myPage.model.vo.Dog" alias="dog"/>
-		<typeAlias type="kr.co.todaydaeng.diary.model.vo.Diary" alias="diary"/>
+		<typeAlias type="kr.co.todaydaeng.diary.model.vo.Diary" alias="diary"/>		
 	</typeAliases>
 
 </configuration>

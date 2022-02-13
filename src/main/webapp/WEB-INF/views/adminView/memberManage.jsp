@@ -96,7 +96,10 @@
                             <th>관리자 이름</th>
                             <th>반려동물 등록</th>
                             <th>가입일시</th>
-                            <th>회원상태                             	 
+                            <th>회원상태
+                                    <c:if test="${requestScope.map.count != 0}"> 
+                            			<span class="badge bg-danger"> ${requestScope.map.count} </span>
+                            	 	</c:if>                             	 
                             </th>
                             <th>선택</th>                            
                         </tr>
@@ -197,6 +200,16 @@
        </div>
 
    </div>
+   
+    <script>
+   		$(".badge").click(function(){
+   	    $('tr>td:last').children().prop('checked',true);	
+   		var myModal = new bootstrap.Modal(document.getElementById('gradeForm'), focus);
+   	    myModal.show()	   	    	    	   	    	
+ 		var count = '<c:out value="${(requestScope.map.count)}" />';   		   			   			   					
+		$('#selectMsg').text("총( "+count+" )건");   		   		
+   		});
+   </script>
 
 	<script>
 		function printData(){		
