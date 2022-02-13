@@ -12,4 +12,6 @@ public interface ManageService {
 
 	int updateAdminGrade(HashMap<String, Object> map);
 
+	int updateMemberStatus(HashMap<String, Object> map);
+
 }

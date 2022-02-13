@@ -59,7 +59,12 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public ArrayList<Member> selectMemberList(HashMap<String, Integer> pageNum) {
-		return aDAO.selectAdminList(pageNum);
+		return aDAO.selectMemberList(pageNum);
+	}
+
+	@Override
+	public String memberPageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage) {
+		return aDAO.memberPageNavi(currentPage, recordCountPerPage, naviCountPerPage);
 	}
 
 	@Override
@@ -67,5 +72,5 @@ public class AdminServiceImpl implements AdminService {
 		return aDAO.selectMemberCount();
 	}
 
-
-}
+	
+ }

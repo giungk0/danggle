@@ -61,9 +61,6 @@
    
 <div class="wrap"> 
 
-	<c:choose>
-		<c:when test="${sessionScope.adminVO != null }">
-      
        <div id="header">  <%@ include file="/WEB-INF/views/adminView/adminHeader.jsp" %> </div>
        
        <div id="body">
@@ -156,17 +153,9 @@
 </div>
                
          </div>
-      </c:when>
-      
-          <c:otherwise>
-      	<H2>관리자 계정 로그인이 필요합니다</H2>
-      		<a href="/admin/adminIndex.do"> 로그인으로 이동 </a>
-      </c:otherwise>
-      
-	</c:choose>
-	          
+
  </div>        
-<c:if test="${sessionScope.adminVO != null }">      
+ 
    <script>   
     $('#adminId').focusin(function() {
     	var myModal = new bootstrap.Modal(document.getElementById('idChkForm'), focus);
@@ -362,8 +351,6 @@
 		location.reload();
 	}
     </script>
-    
-</c:if>
         
 </body>
 </html>

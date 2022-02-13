@@ -30,5 +30,10 @@ public class ManageServiceImpl implements ManageService {
 		return aDAO.updateAdminGrade(map);
 	}
 
+	@Override
+	public int updateMemberStatus(HashMap<String, Object> map) {
+		return aDAO.updateMemberStatus(map);
+	}
+
 	
 }

@@ -26,8 +26,9 @@ public interface AdminService {
 
 	ArrayList<Member> selectMemberList(HashMap<String, Integer> pageNum);
 
-	int selectMemberCount();
+	String memberPageNavi(int currentPage, int recordCountPerPage, int naviCountPerPage);
 
+	int selectMemberCount();
 
 
 }

@@ -95,7 +95,7 @@
         <ul>
             <li> <span class="highlight" onclick="adminAccount();"> 추가  </span> </li>  
             <li> <span class="highlight" onclick="adminManage()" > 권한 조정 / 삭제 </span> </li>
-            <li> <span class="highlight" onclick="adminInfo()" > 계정정보 확인 / 변경 </span> </li>
+            <li> <span class="highlight" onclick="adminInfo()" > 나의 정보 확인 / 변경 </span> </li>
         </ul>
        
         <H2 class="category"> 친구찾기 게시판 </H2>       

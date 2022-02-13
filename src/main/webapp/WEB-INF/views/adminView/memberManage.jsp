@@ -65,8 +65,6 @@
    
    <div class="wrap"> 
    
-	<%-- <c:choose> 
-		<c:when test="${sessionScope.adminVO != null }"> --%>		
    	
       <div id="header">  <%@ include file="/WEB-INF/views/adminView/adminHeader.jsp" %> </div>
        
@@ -98,10 +96,7 @@
                             <th>관리자 이름</th>
                             <th>반려동물 등록</th>
                             <th>가입일시</th>
-                            <th>회원상태 
-                            	 	<c:if test="${requestScope.map.count != null}"> 
-                            			<span class="badge bg-danger"> ${requestScope.map.count} </span>
-                            	 	</c:if>
+                            <th>회원상태                             	 
                             </th>
                             <th>선택</th>                            
                         </tr>
@@ -109,13 +104,13 @@
                     <tbody>
                    <c:choose>
                    
-                   	<c:when test="${requestScope.map.member != null}">
+                   	<c:when test="${requestScope.map.list != null}">
                    		
-                      <c:forEach items="${requestScope.map.member}" var="a">	
+                      <c:forEach items="${requestScope.map.list}" var="a">	
                         <tr>
                             <td> ${a.memberNo} </td>
                             <td> ${a.memberId} </td>
-                            <td> ${a.nickame} </td>
+                            <td> ${a.nickname} </td>
                             <td> ${a.dogYN} </td>
                             <td> ${a.enrollDate} </td>
                             <td> ${a.memberStatus} </td>
@@ -132,54 +127,33 @@
                    </c:choose>                                              
                     </tbody>
                     <tfoot style="text-align: center;">                            
-                    
-                     <c:choose>
-                      <c:when test="${requestScope.map.member == null}">                      		
+    
                       	  <tr>
                         	   <td colspan="3"></td>
-                           	   <td colspan="3">
+                           	   <td colspan="1">
                             	<nav aria-label="...">
 									  <ul class="pagination">
-								  			<li class="page-item"><a href="" class="page-link">처음</a></li>
-    									  									
-    										<li class="page-item">
-      											<a  href=""  class="page-link"> 페이징 없음 </a>
-									    	</li>
+								  			<li class="page-item"><a class="page-link" href="/admin/memberManage.do?currentPage=${requestScope.map.start}">처음</a></li>
+    									  							
+      										 ${requestScope.map.pageNavi}
 									    
-									    	<li class="page-item"><a  href="" class="page-link">끝</a> </li>									    
+									    	<li class="page-item"><a class="page-link" href="/admin/memberManage.do?currentPage=${requestScope.map.end}">끝</a> </li>									    
  								  	</ul>
 								</nav>
                            		</td>
                            		<td colspan="3"></td>
-                        	</tr>                                                        
-                       </c:when>
-                       
-						<c:otherwise>
-							<%-- each 함수로 페이징 처리 --%>
-                      	  <tr>
-                        	   <td></td>
-                           	   <td>
-                            	<nav aria-label="...">
-									  <ul class="pagination">
-								  			<li class="page-item"><a class="page-link" href="">처음</a></li>
-    									  									
-    										<li class="page-item">
-      											<a class="page-link" href=""> 페이징 없음 </a>
-									    	</li>
-									    
-									    	<li class="page-item"><a class="page-link" href="">끝</a> </li>									    
- 								  	</ul>
-								</nav>
-                           		</td>
-                           		<td></td>
                         	</tr>                    	
-                    	</c:otherwise>                                              
-                       </c:choose>    
-                                                   
+              
                         <tr>
                             <td colspan="5"> 
                             	<button type="button" class="btn btn-success" onclick="pageRefresh();" style="float:left;">
                             		새로고침	
+                            	</button>
+                            </td>
+                            
+                            <td> 
+                            	<button type="button" class="btn btn-secondary" onclick="allSelect();">
+                            		전체선택	
                             	</button>
                             </td>
                             
@@ -205,7 +179,7 @@
                                               
                                           </div>
                                       <div class="modal-footer">
-                                      <button type="button" class="btn btn-outline-danger" onclick="gradeChange();">실행</button>
+                                      <button type="button" class="btn btn-outline-danger" onclick="statusChange();">실행</button>
                                       <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
                                       </div>
                                     </div>
@@ -221,28 +195,8 @@
            </div>
            
        </div>
-    <%-- </c:when>       
-       
-      <c:otherwise>
-      	<H2>관리자 계정 로그인이 필요합니다</H2>
-      		<a href="/admin/adminIndex.do"> 로그인으로 이동 </a>
-      </c:otherwise>      
-	</c:choose> --%>
-              
+
    </div>
-<%-- <c:if test="${sessionScope.adminVO != null }">  --%>  
-    <script>
-   		$(".badge").click(function(){
-   		// 1. 배지를 클릭하면 등급조정 모달을 활성화 하고 C등급 사용자를 변수에 저장 후 출력
-   	    $('td:contains(C)').next().children().prop('checked',true);	
-   		var myModal = new bootstrap.Modal(document.getElementById('gradeForm'), focus);
-   	    myModal.show()	   	    	    	   	    	
- 		var count = '<c:out value="${(requestScope.map.count)}" />';   		   			   			   					
-		$('#selectMsg').text("총( "+count+" )건");   		
-   		// 2. 등급 조정 ajax 함수 실행				
-   		// 변경 버튼 클릭 이벤트   		
-   		});
-   </script>
 
 	<script>
 		function printData(){		
@@ -259,9 +213,9 @@
 	</script>
 	
    <script>
-		function gradeChange(){
+		function statusChange(){
 			var dataArray = new Array();
-			var grade = $('#gradeValue>option:selected').val();
+			var status = $('#gradeValue>option:selected').val();
 			
 			$('input:checked').each(function(){
 				dataArray.push( this.value );
@@ -271,9 +225,9 @@
 				return false;
 			}else{					
 				$.ajax({
-			    	url : "/admin/adminGradeChange.do",
+			    	url : "/admin/memberStatusChange.do",
 			        type : "post",            
-			        data : {"dataArray":dataArray,"newGrade":grade},			        
+			        data : {"dataArray":dataArray,"status":status},			        
 			        success : function(data) {           
 			      if (data == 'pass') {            				          
 			    	 alert('변경 성공');
@@ -315,6 +269,16 @@
    		};
    </script>
    
-<%-- </c:if>   --%>
+   <script>
+   		function allSelect(){
+   			if ($('input[type=checkbox]').prop('checked') == false ){
+   				$('input[type=checkbox]').prop('checked',true);	
+   			}else{
+   				$('input[type=checkbox]').prop('checked',false);
+   			}
+   			
+   		}
+   </script>
+   
 </body>
 </html>

@@ -61,9 +61,6 @@
 <body>
    
    <div class="wrap"> 
-   
-	<c:choose>
-		<c:when test="${sessionScope.adminVO != null }">
 		
        <div id="header">  <%@ include file="/WEB-INF/views/adminView/adminHeader.jsp" %> </div>
        
@@ -75,13 +72,7 @@
                <h1>좌측의 메뉴에서 필요한 기능을 선택해 주세요</h1>
            </div>
        </div> 
-       </c:when>
-       
-      <c:otherwise>
-      	<H2>관리자 계정 로그인이 필요합니다</H2>
-      		<a href="/admin/adminIndex.do"> 로그인으로 이동 </a>
-      </c:otherwise>      
-	</c:choose>
+
 	       
    </div>
     

@@ -122,7 +122,8 @@
 		</choose>
 	</select>
 	
-	<select id="selectMemberList" parameterType="map" resultType="member">
+		
+		<select id="selectMemberList" parameterType="map" resultType="member">
 		 SELECT
 		 	   member_no AS memberNo,
 			   member_id AS memberId,
@@ -139,13 +140,22 @@
 			   dog_yn AS dogYN,
 			   member_profile AS memberProfile
  		 FROM (SELECT ROW_NUMBER() OVER(ORDER BY member_no ASC) AS num, member.* FROM member)
-		 WHERE num BETWEEN #{first} AND #{last};
+		 WHERE num BETWEEN #{first} AND #{last}
 	</select>
 	
 	<select id="selectMemberCount" resultType="int">
 		 SELECT 
-		 	COUNT(*) AS count 
-		 FROM member;		 
+		 	COUNT(*)
+		 FROM member		 
 	</select>
-
+	
+	<update id="updateMemberStatus" parameterType="map">
+		UPDATE member
+		SET member_status=#{status}			
+		WHERE member_no IN
+		<foreach collection="memberNo" item="num" open="(" separator="," close=")">
+			#{num}
+		</foreach>
+	</update>
+	
 </mapper>
